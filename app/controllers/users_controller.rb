@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    # @user = current_user
     @books = @user.books
     @book = Book.new
   end
@@ -13,11 +14,14 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @user = current_user
   end
 
   def update
+    # binding.pry
     if @user.update(user_params)
-      redirect_to users_path(@user), notice: "You have updated user successfully."
+      # binding.pry
+      redirect_to user_path, notice: "You have updated user successfully."
     else
       render "show"
     end
