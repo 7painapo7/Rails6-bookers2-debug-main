@@ -2,10 +2,10 @@ class UsersController < ApplicationController
   before_action :ensure_correct_user, only: [:update]
 
   def show
+    @book = Book.new
     @user = User.find(params[:id])
     # @user = current_user
     @books = @user.books
-    @book = Book.new
   end
 
   def index
