@@ -13,9 +13,13 @@ class UsersController < ApplicationController
     @book = Book.new
   end
 
-  def edit
-    @user = current_user
-  end
+	def edit
+		@user = User.find(params[:id])
+		# カレントユーザーでない場合
+	    if @user != current_user
+	      redirect_to user_path(current_user.id)
+	    end
+	end
 
   def update
     # binding.pry

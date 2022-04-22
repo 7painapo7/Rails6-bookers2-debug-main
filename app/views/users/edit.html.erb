@@ -4,7 +4,6 @@
     <h2>User info</h2>
     <%= form_with model:@user, local:true do |f| %>
     <%= render 'layouts/errors', obj: @user %>
-    <%= render "devise/shared/error_messages", resource: @user %>
       <div class="form-group">
         <%= f.label :name %>
         <%= f.text_field :name, class: "form-control name" %>
