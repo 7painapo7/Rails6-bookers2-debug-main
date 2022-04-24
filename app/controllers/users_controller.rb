@@ -17,6 +17,8 @@ class UsersController < ApplicationController
     @book = Book.new
     @user = current_user
 		@books = @user.books.reverse_order
+		@following_users = current_user.following_user
+    @follower_users = current_user.follower_user
   end
 
 	def edit
