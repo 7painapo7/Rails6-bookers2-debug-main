@@ -12,6 +12,11 @@ Rails.application.routes.draw do
   resources :users do
     resource :relationships, only: [:create, :destroy]
   end
+
+  devise_scope :user do
+    post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
+  end
+
   get "home/about"=>"homes#about"
   get "follow/:user_id"=>"relationships#follow", as: :follow
   get "follower/:user_id"=>"relationships#follower", as: :follower
