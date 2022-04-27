@@ -2,9 +2,9 @@ class UsersController < ApplicationController
   before_action :ensure_correct_user, only: [:update]
   before_action :ensure_guest_user, only: [:edit]
 
-	def new
-		@user = User.new
-	end
+  def new
+    @user = User.new
+  end
 
   def show
     @book = Book.new
@@ -17,16 +17,16 @@ class UsersController < ApplicationController
     @users = User.all
     @book = Book.new
     @user = current_user
-		@books = @user.books.reverse_order
+    @books = @user.books.reverse_order
   end
 
-	def edit
-		@user = User.find(params[:id])
-		# カレントユーザーでない場合
-	    if @user != current_user
-	      redirect_to user_path(current_user.id)
-	    end
-	end
+  def edit
+    @user = User.find(params[:id])
+    # カレントユーザーでない場合
+    if @user != current_user
+      redirect_to user_path(current_user.id)
+    end
+  end
 
   def update
     # @user = User.find(params[:id])
@@ -51,10 +51,11 @@ class UsersController < ApplicationController
       redirect_to user_path(current_user)
     end
   end
+
   def ensure_guest_user
     @user = User.find(params[:id])
     if @user.name == "guestuser"
-      redirect_to user_path(current_user) , notice: 'ゲストユーザーはプロフィール編集画面へ遷移できません。'
+      redirect_to user_path(current_user), notice: 'ゲストユーザーはプロフィール編集画面へ遷移できません。'
     end
   end
 end
