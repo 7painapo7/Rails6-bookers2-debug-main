@@ -17,10 +17,6 @@
           </td>
           <td><%= link_to @book.title, @book %></td>
           <td><%= @book.body %></td>
-          <% if @user == current_user %>
-            <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success edit_book_#{@book.id}" %></td>
-            <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger destroy_book_#{@book.id}"%></td>
-          <% end %>
           <!--like-->
 　    　  <!--いいねのパーシャル化-->
 　    　  <td id="favorite_buttons_<%= @book.id %>">
@@ -28,6 +24,28 @@
 　　      </td>
           <!--comment-->
           <td>コメント数：<%= @book.book_comments.count %></td>
+          <!--評価-->
+          <td>
+          <div id="star-rate-<%= @book.id %>"></div>
+          <script>
+            // 繰り返し処理でもidをidを一意にできるようにnote_idを入れる
+          $('#star-rate-<%= @book.id %>').raty({
+            size: 36,
+            starOff:  '<%= asset_path('star-off.png') %>',
+            starOn : '<%= asset_path('star-on.png') %>',
+            starHalf: '<%= asset_path('star-half.png') %>',
+            half: true,
+            // 読み込みだけで入力できない
+            readOnly: true,
+            score: <%= @book.evaluation %>,
+          });
+          </script>
+          </td>
+          <% if @user == current_user %>
+            <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success edit_book_#{@book.id}" %></td>
+            <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger destroy_book_#{@book.id}"%></td>
+          <% end %>
+
         </tr>
       </table>
       <div class='col-md-8 offset-md-1'>

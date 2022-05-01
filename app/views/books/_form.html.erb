@@ -8,6 +8,40 @@
     <%= f.label :opinion %>
     <%= f.text_area :body, class: 'form-control book_body' %>
   </div>
+  <!--↓↓↓評価↓↓↓-->
+  <% if request.url.include?("edit") %>
+    <div id="star-rate-<%= book.id %>">
+      <label>評価</label>
+    </div>
+    <script>
+    // 繰り返し処理でもidをidを一意にできるようにnote_idを入れる
+    $('#star-rate-<%= book.id %>').empty();
+    $('#star-rate-<%= book.id %>').raty({
+      size: 36,
+      starOff:  '<%= asset_path('star-off.png') %>',
+      starOn : '<%= asset_path('star-on.png') %>',
+      starHalf: '<%= asset_path('star-half.png') %>',
+      half: true,
+      // 読み込みだけで入力できない
+      readOnly: true,
+      score: <%= book.evaluation %>,
+    });
+    </script>
+  <% else %>
+    <div id="evaluate_stars">
+      <label>評価</label>
+    </div>
+    <script>
+    $('#evaluate_stars').empty();
+    $('#evaluate_stars').raty({
+      starOn: "<%= asset_path('star-on.png') %>",
+      starOff: "<%= asset_path('star-off.png') %>",
+      starHalf: "<%= asset_path('star-half.png') %>",
+      scoreName: 'book[evaluation]' //登録するモデル名とカラム名を記述
+    });
+    </script>
+  <% end %>
+  <!--↑↑↑評価↑↑↑-->
   <div class="form-group">
     <%= f.submit class: 'btn btn-success' %>
   </div>
