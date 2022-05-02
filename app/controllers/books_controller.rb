@@ -9,9 +9,17 @@ class BooksController < ApplicationController
 
   def index
     @book = Book.new
-    @books = Book.all
-
+    # 新着順
+    if params[:sort_update] == "created_at"
+      @books = Book.all.order(created_at: :DESC)
+    # 評価順
+    elsif params[:sort_update] == "evaluation"
+      @books = Book.all.order(evaluation: :DESC)
+    else
+      @books = Book.all
+    end
     @user = current_user
+    # binding.pry
   end
 
   def create
