@@ -15,6 +15,10 @@ class BooksController < ApplicationController
     # 評価順
     elsif params[:sort_update] == "evaluation"
       @books = Book.all.order(evaluation: :DESC)
+    elsif params[:keyword]
+      keyword = request.query_string.split("=")
+      key = keyword[1]
+      @books = Book.all.where("category = '#{key}'")
     else
       @books = Book.all
     end
@@ -64,6 +68,6 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :body, :evaluation) # 評価を追加
+    params.require(:book).permit(:title, :body, :evaluation, :category) # 評価、カテゴリーを追加
   end
 end
